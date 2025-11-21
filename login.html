@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<base target="_top">
+<style>
+body {
+  font-family: Arial;
+  background: #f0f0f0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.box {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 0 10px #aaa;
+}
+button {
+  width: 100%;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Login</h2>
+
+  <input id="username" placeholder="Username"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+
+  <button onclick="loginUser()">Login</button>
+
+  <p id="result" style="color:red;"></p>
+</div>
+
+<script>
+function loginUser() {
+  const uname = document.getElementById("username").value;
+  const pass  = document.getElementById("password").value;
+
+  google.script.run.withSuccessHandler(function(result) {
+    if (result === "success") {
+
+      sessionStorage.setItem("user", uname);
+
+      const webAppUrl = "https://script.google.com/macros/s/AKfycbyYOFllsbrvpP_EI_ccqgVa9BOV1eyO1tueL1QdXikw7533E6r0cUe3F0emJixNzfgfTg/exec";
+
+      window.location.replace(webAppUrl + "?page=Dashboard");
+    } 
+    else {
+      document.getElementById("result").innerText = "Invalid login!";
+    }
+  }).checkLogin(uname, pass);
+}
+</script>
+
+</body>
+</html>
